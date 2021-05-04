@@ -28,11 +28,6 @@
 	};
 
 	let funcTransform2 = function(text) {
-		let funcTriState = function(char) {
-			if (char === '1') return true;
-			if (char === '0') return false;
-			return null;
-		};
 		let funcCypher = function(text, index) {			
 			let afterNothing, after0, after1;
 			if (text[index] === '1') { // 1 after...
@@ -54,8 +49,7 @@
 		for (let binary of temp) {
 			let cypher = "";
 			for (let i = 0; i < binary.length; ++i) {
-				let char = funcCypher(binary, i);
-				if (char !== null) cypher += char;
+				cypher += funcCypher(binary, i);
 			}
 			result.push(cypher);
 		}
