@@ -56,10 +56,9 @@
 		return funcSeperatedString(result,SEPARATOR);
 	};
 	
-	let run = function(text) {	
-		const TEXT = "Hello";	
-		console.log("Text = "+TEXT);
-		let binary = funcTransform1(TEXT);
+	let run = function(text) {
+		console.log("Text = "+text);
+		let binary = funcTransform1(text);
 		console.log("Binary = "+binary);
 		let cypher = funcTransform2(binary);
 		console.log("Final cypher: "+cypher);
