@@ -1,0 +1,86 @@
+(function(global){
+	"strict mode";
+	
+	const SEPARATOR = ' ';
+	let funcSeperatedString = function(arr, separator) {
+		let result = "";
+		for (let item of arr) {
+			result += item;
+			result += separator;
+		}
+		return result.substring(0,result.length-separator.length);
+	}
+
+	let funcTransform1 = function(text) {
+		let result = new Array();
+		for (var i = 0; i < text.length; ++i) {
+			let ascii = text.charCodeAt(i);
+			let binary = "";
+			for (var j = 7; j >= 0; j--) {
+				let value = Math.pow(2,j);
+				let bool = (ascii >= value);
+				if (bool) ascii -= value;
+				binary += (bool?'1':'0');
+			}
+			result.push(binary);
+		}
+		return funcSeperatedString(result,SEPARATOR);
+	};
+
+	let funcTransform2 = function(text) {
+		let funcTriState = function(char) {
+			if (char === '1') return true;
+			if (char === '0') return false;
+			return null;
+		};
+		let funcCypher = function(text, index) {
+			let actual = funcTriState(text[index]);
+			// Should never happen besides an input error
+			if (actual === null) return null;
+			
+			let afterNothing, after0, after1;
+			if (actual) { // 1 after...
+				afterNothing = 'b';
+				after0 = 'e';
+				after1 = 'f';
+			}
+			else { // 0 after...  
+				afterNothing = 'a';
+				after0 = 'c';
+				after1 = 'd';
+			}
+
+			let temp = index-1;
+			let previous = (temp<0) ? null : funcTriState(text[temp]);
+			if (previous === null) return afterNothing;
+			if (previous) return after1;
+			return after0;
+		};
+
+		let result = new Array();
+		const temp = text.split(' ')
+		for (let binary of temp) {
+			let cypher = "";
+			for (let i = 0; i < binary.length; ++i) {
+				let char = funcCypher(binary, i);
+				if (char !== null) cypher += char;
+			}
+			result.push(cypher);
+		}
+		return funcSeperatedString(result,SEPARATOR);
+	};
+	
+	let funcRun = function(text) {	
+		const TEXT = "Hello";	
+		console.log("Text = "+TEXT);
+		let binary = funcTransform1(TEXT);
+		console.log("Binary = "+binary);
+		let cypher = funcTransform2(binary);
+		console.log("Final cypher: "+cypher);
+		return cypher;
+	};
+
+	// TODO: Insert tests here
+	return funcRun("Hello");
+
+})(this);
