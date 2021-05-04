@@ -33,13 +33,9 @@
 			if (char === '0') return false;
 			return null;
 		};
-		let funcCypher = function(text, index) {
-			let actual = funcTriState(text[index]);
-			// Should never happen besides an input error
-			if (actual === null) return null;
-			
+		let funcCypher = function(text, index) {			
 			let afterNothing, after0, after1;
-			if (actual) { // 1 after...
+			if (text[index] === '1') { // 1 after...
 				afterNothing = 'b';
 				after0 = 'e';
 				after1 = 'f';
@@ -49,12 +45,8 @@
 				after0 = 'c';
 				after1 = 'd';
 			}
-
-			let temp = index-1;
-			let previous = (temp<0) ? null : funcTriState(text[temp]);
-			if (previous === null) return afterNothing;
-			if (previous) return after1;
-			return after0;
+			if (index === 0) return afterNothing;
+			return (text[index-1] === '1') ? after1: after0;
 		};
 
 		let result = new Array();
