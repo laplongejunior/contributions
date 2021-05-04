@@ -56,7 +56,7 @@
 		return funcSeperatedString(result,SEPARATOR);
 	};
 	
-	let funcRun = function(text) {	
+	let run = function(text) {	
 		const TEXT = "Hello";	
 		console.log("Text = "+TEXT);
 		let binary = funcTransform1(TEXT);
@@ -67,6 +67,6 @@
 	};
 
 	// TODO: Insert tests here
-	return funcRun("Hello");
+	return run("Hello");
 
 })(this);
