@@ -1,14 +1,12 @@
 (function(global){
 	"strict mode";
 	
-	const SEPARATOR = ' ';
-	let funcSeperatedString = function(arr, separator) {
+	let funcSeperatedString = function(arr) {
+		const SEPARATOR = ' ';
 		let result = "";
-		for (let item of arr) {
-			result += item;
-			result += separator;
-		}
-		return result.substring(0,result.length-separator.length);
+		for (let item of arr)
+			result += item + SEPARATOR;
+		return result.substring(0,result.length-SEPARATOR.length);
 	}
 
 	let funcTransform1 = function(text) {
@@ -17,14 +15,13 @@
 			let ascii = text.charCodeAt(i);
 			let binary = "";
 			for (var j = 7; j >= 0; j--) {
-				let value = Math.pow(2,j);
-				let bool = (ascii >= value);
-				if (bool) ascii -= value;
-				binary += (bool?'1':'0');
+				let old = ascii;
+				ascii%=Math.pow(2,j);
+				binary += (ascii<old)?'1':'0';
 			}
 			result.push(binary);
 		}
-		return funcSeperatedString(result,SEPARATOR);
+		return funcSeperatedString(result);
 	};
 
 	let funcTransform2 = function(text) {
@@ -48,12 +45,11 @@
 		const temp = text.split(' ')
 		for (let binary of temp) {
 			let cypher = "";
-			for (let i = 0; i < binary.length; ++i) {
+			for (let i = 0; i < binary.length; ++i)
 				cypher += funcCypher(binary, i);
-			}
 			result.push(cypher);
 		}
-		return funcSeperatedString(result,SEPARATOR);
+		return funcSeperatedString(result);
 	};
 	
 	let run = function(text) {
