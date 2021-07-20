@@ -171,7 +171,7 @@
 			};
 			const pOut = function(x,y) {
 				let pos = polybiusOut(x,y,NUMBERS);
-				if (pos > 9) pos++;
+				if (pos >= 9) pos++;
 				return String.fromCharCode(pos+97);
 			};
 			
