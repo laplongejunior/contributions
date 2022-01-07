@@ -171,7 +171,7 @@
 			};
 			const pOut = function(x,y) {
 				let pos = polybiusOut(x,y,NUMBERS);
-				if (pos >= 9) pos++;
+				if (pos > 9) pos++;
 				return String.fromCharCode(pos+97);
 			};
 			
@@ -230,6 +230,34 @@
 		}
 	};
 	
+	let KINGSTONE = function(){
+		const STONE = ['l','s','g','c','a','o','p','k','h','i','t','q','w','b','e','r','d','u'];
+		return {
+			cypher : function(input) {
+				var result = "";
+				for (let c of input.toLowerCase()) {
+					// If not found, prints 0
+					result += (STONE.findIndex((val)=>(val==c))+1)+"-";
+				}
+				return result.slice(0,-1);
+			},
+			decypher : function(input) {
+				var result = "";
+				for (let index of input.split("-")) {
+					var c = STONE[parseInt(index)-1];
+					if (c === undefined) c = ' ';
+					result += c;
+				}
+				return result;
+			}
+		};
+		
+	};
+	
+	let carosa = KINGSTONE();
+	if (carosa.cypher("bluecrush") !== "14-1-18-15-4-16-18-2-9") throw new Error("Test failed: Kingstone Cypher");
+	if (carosa.decypher("14-1-18-15-4-16-18-2-9") !== "bluecrush") throw new Error("Test failed: Kingstone Decypher");
+	
 	let sf;
 	
 	sf = SUREFIRE.alpha(MONTHS.JULY);	
@@ -245,5 +273,6 @@
 	if (sf.decypher("FNPOL parrd") !== "HELLO world") throw new Error("Test failed: Delta Decypher");
 	
 	console.log("Secure uplink initiated...");
+	
 	return SUREFIRE.beta().decypher("eeaueyeyii ouiiiyeyao");
 })(this);
